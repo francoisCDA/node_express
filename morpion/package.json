@@ -1,0 +1,12 @@
+{
+  "name": "morpion",
+  "version": "1.0.0",
+  "description": "jeu du morpion en console",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ft",
+  "license": "ISC"
+}

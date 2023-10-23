@@ -2,3 +2,7 @@ support
 demos
 exercices
 corrections
+src
+assets
+bugs
+listedecourses

@@ -1,8 +1,8 @@
-import {appendFileSync, writeFileSync, readFileSync, accessSync, existsSync, mkdir} from 'fs';
+import {appendFileSync, writeFileSync, readFileSync, existsSync, mkdir} from 'fs';
 import LineByLine from 'n-readlines';
 
 const fichierlist = 'lstRepertoire.txt';
-const lstDossier = ['support','demos','exercices','corrections'];
+const lstDossier = ['support','demos','exercices','corrections','src','assets','bugs','listedecourses'];
 
 writeFileSync(fichierlist,"",{encoding:"utf8"})
 
@@ -17,6 +17,7 @@ const monfichier = new LineByLine(fichierlist);
 let ligneSuivante = '';
 while(ligneSuivante = monfichier.next()) {
     const dossier = ligneSuivante.toString();
+
     if (!existsSync(`./${dossier}`)) {
         mkdir(`./${dossier}`, (err) => {
             if (err) {
