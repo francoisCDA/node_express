@@ -18,12 +18,12 @@ class Morpion {
             let nextMove = true ;
 
             while (nextMove) {
+                console.log('');
                 this.affGrille();
-               
-                console.log('Au ',this.joueurUn ? 'Joueur X' : 'Joueur O', ' de jouer');
-                console.log('Indiquer le numéro de la case que vous souhaitez jouer :');
-                this.affnum();
-                let choix = await input("case numéro :");
+                console.log('     Au tour du','     Indiquer le numéro de la case');
+                console.log('     ',this.joueurUn ? 'Joueur X' : 'Joueur O','         que vous souhaitez jouer');
+
+                let choix = await input("                                 => ");
                
                 nextMove = this.joue(choix);
             }
@@ -47,17 +47,13 @@ class Morpion {
     }
 
     affGrille() {
+        let cmpt = 7;
         this.grille.forEach( row => {
-            console.log(`        [${row[0]}|${row[1]}|${row[2]}]`)
+            console.log(`      [${row[0]}|${row[1]}|${row[2]}]                   [${(this.getPosition(cmpt++)).val == ' ' ? cmpt-1 : ' '}|${(this.getPosition(cmpt++)).val == ' ' ? cmpt-1 : ' '}|${(this.getPosition(cmpt++)).val == ' ' ? cmpt-1 : ' '}]`)
+            cmpt-=6;
         })
     }
 
-    affnum() {
-        let cmpt = 0;
-        this.grille.forEach( row => {
-            console.log(`        [${++cmpt}|${++cmpt}|${++cmpt}]`)
-        })
-    }
 
     joue(num) {
         let coup = this.getPosition(num);
@@ -71,28 +67,33 @@ class Morpion {
     }
 
     getPosition(num) {
-        let cmpt = 0
+        let cmpt = 7 ;
         for (let i = 0 ; i < this.grille.length ; i++) {
             for (let j = 0 ; j < this.grille[i].length ; j++ ) {
-                cmpt++;
                 if (cmpt == num) {
                     return {haut: i, larg: j, val: this.grille[i][j]}
                 }
+                cmpt++;
             }
+            cmpt-=6;
         }
         return 'echec'
     }
+
 
     testVictoire() {
 
         if ((this.getPosition(1)).val != ' ' && (this.getPosition(1)).val == (this.getPosition(5)).val && (this.getPosition(1)).val == (this.getPosition(9)).val) { return true }
         if ((this.getPosition(7)).val != ' ' && (this.getPosition(7)).val == (this.getPosition(5)).val && (this.getPosition(5)).val == (this.getPosition(3)).val) { return true }
-        
+
+        let ret = false
         this.grille.forEach( ligne => {
-            if (ligne[0] != ' ' && ligne[0] == ligne[1] && ligne[0] == ligne[2]) {
-                return true;
+            if (ligne[0] != ' ' && ligne[0]==ligne[1] && ligne[0]==ligne[2]) {
+                ret = true;
+                return true; // le return stop le foreach mais pas testVictoire()...
             }
         })
+        if (ret) { return true}
 
         for (let i = 0 ; i < 3 ; i++) {
             if (this.grille[0][i] != ' ' && this.grille[0][i] == this.grille[1][i] && this.grille[1][i] == this.grille[2][i] ) {return true}
