@@ -1,5 +1,5 @@
 import input from "../tools/readInput.js";
-
+import { appendFileSync, existsSync, mkdirSync, writeFileSync } from 'fs';
 
 
 class Morpion {
@@ -43,6 +43,44 @@ class Morpion {
                 }
             }
         }
+
+        console.log('');
+
+        let save = await input("Souhaitez-vous enregistrer la partie ? (y/N) : ");
+
+        console.log('save', save)
+
+        if ((save.toUpperCase()) == 'Y') {
+
+            let gameData = 'Partie jouée le ' + Date() + '\nSéquence de jeu :\n' + JSON.stringify(this.partie) + '\n\nPosition finale :\n';
+
+            this.grille.forEach(ligne => {
+                gameData += JSON.stringify(ligne) + '\n'
+            })
+
+            let nom = await input("indiquer un nom de fichier : ");
+
+            const savDir = './parties_sauvegardees' ;
+
+            if (!existsSync(savDir)) {
+                mkdirSync(savDir)
+            }
+
+            const pathFichier = savDir + '/' + nom + '.txt' ;
+
+            if (!existsSync(pathFichier)) {
+               
+                const grilleNum = 'Positions des coups :\n  [7|8|9]\n  [4|5|6]\n  [1|2|3]\n ______________________________ \n'
+                writeFileSync(pathFichier, grilleNum ,{encoding:'utf8'})
+            
+            } 
+
+            appendFileSync(pathFichier, '\n' + gameData ,{encoding:'utf8'})
+            
+            console.log(`partie enregistrée dans le fichier `,pathFichier)
+                
+
+        } 
 
     }
 

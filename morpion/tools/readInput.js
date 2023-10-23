@@ -1,6 +1,7 @@
 import readline from "readline";
 
  function input(saisie) {
+    
     const readL = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
