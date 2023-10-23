@@ -1,0 +1,15 @@
+{
+  "name": "exo1",
+  "version": "1.0.0",
+  "description": "premier exercice",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ft",
+  "license": "ISC",
+  "dependencies": {
+    "n-readlines": "^1.0.1"
+  }
+}
