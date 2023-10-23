@@ -95,7 +95,7 @@ class Morpion {
         })
 
         for (let i = 0 ; i < 3 ; i++) {
-            if (this.grille[i][0] != ' ' && this.grille[i][0] == this.grille[i][1] && this.grille[i][0] == this.grille[i][2] ) {return true}
+            if (this.grille[0][i] != ' ' && this.grille[0][i] == this.grille[1][i] && this.grille[1][i] == this.grille[2][i] ) {return true}
         }
 
         return false
