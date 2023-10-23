@@ -48,8 +48,6 @@ class Morpion {
 
         let save = await input("Souhaitez-vous enregistrer la partie ? (y/N) : ");
 
-        console.log('save', save)
-
         if ((save.toUpperCase()) == 'Y') {
 
             let gameData = 'Partie jouée le ' + Date() + '\nSéquence de jeu :\n' + JSON.stringify(this.partie) + '\n\nPosition finale :\n';
@@ -58,7 +56,7 @@ class Morpion {
                 gameData += JSON.stringify(ligne) + '\n'
             })
 
-            let nom = await input("indiquer un nom de fichier : ");
+            let nom = await input("Indiquer un nom de fichier : ");
 
             const savDir = './parties_sauvegardees' ;
 
@@ -70,17 +68,20 @@ class Morpion {
 
             if (!existsSync(pathFichier)) {
                
-                const grilleNum = 'Positions des coups :\n  [7|8|9]\n  [4|5|6]\n  [1|2|3]\n ______________________________ \n'
-                writeFileSync(pathFichier, grilleNum ,{encoding:'utf8'})
+                const grilleNum = 'Positions des coups :\n  [7|8|9]\n  [4|5|6]\n  [1|2|3]\n ______________________________ \n';
+                writeFileSync(pathFichier, grilleNum ,{encoding:'utf8'});
             
             } 
 
-            appendFileSync(pathFichier, '\n' + gameData ,{encoding:'utf8'})
+            appendFileSync(pathFichier, '\n' + gameData ,{encoding:'utf8'});
             
-            console.log(`partie enregistrée dans le fichier `,pathFichier)
-                
+            console.log('');
+            console.log(`Partie enregistrée dans le fichier `,pathFichier);
 
         } 
+
+        console.log('');
+        console.log("À bientôt :)");
 
     }
 
@@ -124,14 +125,14 @@ class Morpion {
         if ((this.getPosition(1)).val != ' ' && (this.getPosition(1)).val == (this.getPosition(5)).val && (this.getPosition(1)).val == (this.getPosition(9)).val) { return true }
         if ((this.getPosition(7)).val != ' ' && (this.getPosition(7)).val == (this.getPosition(5)).val && (this.getPosition(5)).val == (this.getPosition(3)).val) { return true }
 
-        let ret = false
+        let ret = false ;
         this.grille.forEach( ligne => {
             if (ligne[0] != ' ' && ligne[0]==ligne[1] && ligne[0]==ligne[2]) {
                 ret = true;
                 return true; // le return stop le foreach mais pas testVictoire()...
             }
         })
-        if (ret) { return true}
+        if (ret) { return true }
 
         for (let i = 0 ; i < 3 ; i++) {
             if (this.grille[0][i] != ' ' && this.grille[0][i] == this.grille[1][i] && this.grille[1][i] == this.grille[2][i] ) {return true}
