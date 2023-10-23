@@ -7,6 +7,7 @@ class Morpion {
     constructor() {
         this.grille = [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']];
         this.joueurUn = true;
+        this.partie = [];
     }
 
     async game() { 
@@ -27,12 +28,21 @@ class Morpion {
                 nextMove = this.joue(choix);
             }
 
-            
-
-            this.joueurUn = !this.joueurUn ;
+            if (this.testVictoire()) {
+                this.affGrille();
+                console.log(`Victoire du joueur ${this.joueurUn ? 'X' : 'O' }`);
+                gameOver = true ;
+               
+            } else {
+                if (this.partie.length == 9) {
+                    this.affGrille();
+                    console.log('Match nul');
+                    gameOver = true;
+                } else {
+                    this.joueurUn = !this.joueurUn ;
+                }
+            }
         }
-
-        gameOver = true;
 
     }
 
@@ -53,6 +63,7 @@ class Morpion {
         let coup = this.getPosition(num);
         if (coup.val == ' ') {
             this.grille[parseInt(coup.haut)][parseInt(coup.larg)] = this.joueurUn ? 'X' : 'O' ;
+            this.partie.push(num);
             return false
         } else {
             return true
@@ -73,16 +84,21 @@ class Morpion {
     }
 
     testVictoire() {
-        if (getPosition(1).val == this.getPosition(5) && this.getPosition(1).val == this.getPosition(9)) { return true }
-        if (getPosition(7).val == this.getPosition(5) && this.getPosition(5).val == this.getPosition(3)) { return true }
+
+        if ((this.getPosition(1)).val != ' ' && (this.getPosition(1)).val == (this.getPosition(5)).val && (this.getPosition(1)).val == (this.getPosition(9)).val) { return true }
+        if ((this.getPosition(7)).val != ' ' && (this.getPosition(7)).val == (this.getPosition(5)).val && (this.getPosition(5)).val == (this.getPosition(3)).val) { return true }
         
         this.grille.forEach( ligne => {
-            if (ligne[0] == ligne[1] && ligne[0] == ligne[2]) {
+            if (ligne[0] != ' ' && ligne[0] == ligne[1] && ligne[0] == ligne[2]) {
                 return true;
             }
         })
 
-        
+        for (let i = 0 ; i < 3 ; i++) {
+            if (this.grille[i][0] != ' ' && this.grille[i][0] == this.grille[i][1] && this.grille[i][0] == this.grille[i][2] ) {return true}
+        }
+
+        return false
         
     }
 
