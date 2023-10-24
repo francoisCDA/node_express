@@ -1,13 +1,14 @@
 import input from "../tools/readInput.js";
 import { appendFileSync, existsSync, mkdirSync, writeFileSync } from 'fs';
-
+import BetaMorpion from "./BetaMorpion.js";
 
 class Morpion {
 
-    constructor() {
+    constructor(mode) {
         this.grille = [[' ',' ',' '],[' ',' ',' '],[' ',' ',' ']];
         this.joueurUn = true;
         this.partie = [];
+        this.IA = (mode);
     }
 
     async game() { 
@@ -23,12 +24,18 @@ class Morpion {
                 console.log('     Au tour du','     Indiquer le numéro de la case');
                 console.log('     ',this.joueurUn ? 'Joueur X' : 'Joueur O','         que vous souhaitez jouer');
 
-                let choix = await input("                                 => ");
-               
-                nextMove = this.joue(choix);
+                if (!this.IA || this.joueurUn ) {
+                    let choix = await input("                                 => ");
+                    nextMove = this.joue(choix);
+                } else {
+                    let IAmove = BetaMorpion([ [...this.grille[0]],[...this.grille[1]],[...this.grille[2]]])
+                    this.partie.push(IAmove);
+                    this.grille[IAmove.haut][IAmove.larg] = 'O' ;
+                    nextMove = false;
+                }
             }
 
-            if (this.testVictoire()) {
+            if ( this.testVictoire()) {
                 this.affGrille();
                 console.log(`Victoire du joueur ${this.joueurUn ? 'X' : 'O' }`);
                 gameOver = true ;
@@ -39,7 +46,7 @@ class Morpion {
                     console.log('Match nul');
                     gameOver = true;
                 } else {
-                    this.joueurUn = !this.joueurUn ;
+                    this.joueurUn = !this.joueurUn ; 
                 }
             }
         }
