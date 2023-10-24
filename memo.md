@@ -51,3 +51,12 @@ type:"module" // ou utiliser l'extension .mjs (module javascript)
 
 
 npm i n-readline
+
+
+
+##Express
+
+npm i express
+
+####dans le fichier
+const app = express()
