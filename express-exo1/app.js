@@ -32,9 +32,10 @@ app.delete('/todos/:todoID', (req,res) => {
     res.send(`todo ${req.params.todoID} supprimée`)
 })
 
-app.get('/todos/:titreTodo', (req,res) => {
-
+app.get('/todos/titre', (req,res) => {
+    let maToDo = getToDoByTitre(req.body)
     
+    res.json(maToDo);
 })
 
 
@@ -54,6 +55,13 @@ let comptTodo = 0 ;
     const keys = Object.keys(DB);
     comptTodo = keys[keys.length-1]; 
 } )()
+
+function getToDoByTitre(titre) {
+    const maDB = JSON.parse(readFileSync(pathTodos));
+    const lstTitre = Object.keys(maDB).filter(key => maDB[key].titre == titre).map( key => maDB[key]);
+
+    return lstTitre;
+}
 
 
 function deleteTodo(id) {
