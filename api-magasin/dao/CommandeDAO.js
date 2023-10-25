@@ -25,11 +25,11 @@ export class CommandeDAO {
 
     create({idClient,lstProduits}) {
 
-        const clients = readFileSync(this.fichierClients, {encoding: "utf-8"});
+        const clients = JSON.parse(readFileSync(this.fichierClients, {encoding: "utf-8"}));
         const client = clients.find( cl => cl.id == id)
         if (!client) { return { "error" : ` id client ${idClient} inconnu` }}
 
-        const produits = readFileSync(this.fichierProduits, {encoding: "utf-8"});
+        const produits = JSON.parse(readFileSync(this.fichierProduits, {encoding: "utf-8"}));
         for (let i = 0 ; i < lstProduits.length ; i++ ) {
             const produit = produits.find( pr => pr.id == lstProduits[i].id )
             if (!produit) { return { "error": `id du produit ${lstProduits[i]} inconnu`}}
