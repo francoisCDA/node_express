@@ -42,5 +42,10 @@ export class CommandeDAO {
         return newCommande;
     }
 
+    getCommande(id) {
+        const command = this.commandes.find( co => co.id == id) ;
+        return command ? command : { "error": `commande n°${id} non répertoriée` };
+    }  
+
 
 }
